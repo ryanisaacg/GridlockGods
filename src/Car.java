@@ -1,8 +1,9 @@
 
 public class Car
 {
+    public static int CAR_LENGTH = 1;
     public RoadNode start, end;
-    public float progress;
+    public int progress, waiting_time;
     private RoadNode endGoal;
     
     public Car(RoadNode start, RoadNode endGoal) 

@@ -1,9 +1,12 @@
+import java.util.List;
+
 public class RoadNode
 {
     public class Connection
     {
 	RoadNode endpoint;
 	int length, speed;
+	List<Car> incoming;
 
 	public Connection(RoadNode endpoint, int length, int speed)
 	{
