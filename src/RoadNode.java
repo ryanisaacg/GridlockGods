@@ -5,10 +5,11 @@ public class RoadNode
     public class Connection
     {
 	RoadNode endpoint;
-	int length, speed;
+	int length;
+	float speed;
 	List<Car> incoming;
 
-	public Connection(RoadNode endpoint, int length, int speed)
+	public Connection(RoadNode endpoint, int length, float speed)
 	{
 	    this.endpoint = endpoint;
 	    this.length = length;
@@ -17,13 +18,17 @@ public class RoadNode
     }
 
     Connection[] connections;
+    
+    int x, y;
 
-    public RoadNode()
+    public RoadNode(int x, int y)
     {
 	connections = new Connection[4];
+	this.x = x;
+	this.y = y;
     }
 
-    public void addConnection(int direction, RoadNode endpoint, int length, int speed)
+    public void addConnection(int direction, RoadNode endpoint, int length, float speed)
     {
 	connections[direction] = new Connection(endpoint, length, speed);
     }

@@ -5,8 +5,8 @@ public class Car
     public RoadNode start, end;
     public int progress, waiting_time;
     private RoadNode endGoal;
-    
-    public Car(RoadNode start, RoadNode endGoal) 
+
+    public Car(RoadNode start, RoadNode endGoal)
     {
 	this.start = start;
 	this.progress = 0;
