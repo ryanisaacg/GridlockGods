@@ -16,10 +16,12 @@ public class Debug extends JPanel
     private final int WIDTH = 640, HEIGHT = 480;
     private BufferedImage car, streetTiles, trafficLight;
     
+    private BufferedImage street, streetLR, streetUD;
+    
     public Debug()
     {
     	world = new World();
-    	world.populateRoads(WIDTH / 8, HEIGHT / 8);
+    	world.populateRoads(WIDTH, HEIGHT);
     	this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
     	
     	BufferedImageLoader loader = new BufferedImageLoader();
@@ -27,6 +29,13 @@ public class Debug extends JPanel
     	car = loader.loadImage("/car.png");
     	streetTiles = loader.loadImage("/StreetTiles.png");
     	trafficLight = loader.loadImage("/TrafficLight.png");
+    	
+    	SpriteSheet ss = new SpriteSheet(streetTiles);
+    	
+    	street = ss.grabImage(4, 4, 32, 32);
+    	streetLR = ss.grabImage(4, 1, 32, 32);
+    	streetUD = ss.grabImage(1, 4, 32, 32);
+    	
     }
     
     @Override
@@ -34,25 +43,34 @@ public class Debug extends JPanel
     {
 		Graphics2D g2d = (Graphics2D)g;
 		for(RoadNode node : world.intersections) 
-	{
-	    if(node.connections[0] != null) 
-	    {
-			g2d.setColor(Color.GRAY);
-			g2d.fillRect(node.x * 8 + 8, node.y * 8, 80, 8);
-			//g2d.drawImage(car, node.x * 8 + 8, node.y * 8 , null);
-	    }
-	    if(node.connections[3] != null) 
-	    {
-			g2d.setColor(Color.GRAY);
-			g2d.fillRect(node.x * 8, node.y * 8 + 8, 8, 80);
-	    }
-	}
+		{
+		    if(node.connections[0] != null) // Right
+		    {
+				g2d.setColor(Color.GRAY);
+				//g2d.fillRect(node.x * 16 + 8, node.y * 16, 320, 32);
+				
+				for (int i = 4; i <= 16; i += 4) 
+				{
+					g2d.drawImage(streetLR, node.x * 16 + 8*i, node.y * 16, null);	
+				}
+		    }
+		    if(node.connections[3] != null) // Down
+		    {
+				g2d.setColor(Color.GRAY);
+				//g2d.fillRect(node.x * 16, node.y * 16 + 8, 32, 320);
+				for (int i = 4; i <= 16; i += 4) 
+				{
+					g2d.drawImage(streetUD, node.x * 16, node.y * 16 + 8*i, null);	
+				}
+		    }
+		}
 		for(RoadNode node : world.intersections) 
 		{
 		    g2d.setColor(Color.RED);
-		    g2d.fillRect(node.x * 8, node.y * 8, 8, 8);
+		    g2d.fillRect(node.x * 16, node.y * 16, 32, 32);
+		    g2d.drawImage(street, node.x * 16, node.y * 16, null);
 		    if(node.x * 8 > 640)
-			System.out.println(node.x * 8);
+		    	System.out.println(node.x * 8);
 		}
     }
 }
