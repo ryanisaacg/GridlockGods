@@ -31,5 +31,15 @@ public class RoadNode
     public void addConnection(int direction, RoadNode endpoint, int length, float speed)
     {
 	connections[direction] = new Connection(endpoint, length, speed);
+	endpoint.connections[(direction + 2) % 4] = new Connection(this, length, speed); 
+    }
+    
+    public void die() 
+    {
+	for(int i = 0; i < 4; i++) 
+	{
+	    if(connections[i] == null) continue;
+	    connections[i].endpoint.connections[(i + 2) % 4] = null;
+	}
     }
 }
