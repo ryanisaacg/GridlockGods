@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 
 public class Debug extends JPanel
 {
+    private static final long serialVersionUID = 1L;
+
     World world;
     
     private final int WIDTH = 640, HEIGHT = 480;
