@@ -2,75 +2,73 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
-
 
 public class Debug extends JPanel
 {
     private static final long serialVersionUID = 1L;
 
     World world;
-    
+
     private final int WIDTH = 640, HEIGHT = 480;
-    private BufferedImage car, streetTiles, trafficLight;
-    
-    private BufferedImage street, streetLR, streetUD;
-    
+
     public Debug()
     {
-    	world = new World();
-    	world.populateRoads(WIDTH, HEIGHT);
-    	this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-    	
-    	BufferedImageLoader loader = new BufferedImageLoader();
-    	
-    	car = loader.loadImage("/car.png");
-    	streetTiles = loader.loadImage("/StreetTiles.png");
-    	trafficLight = loader.loadImage("/TrafficLight.png");
-    	
-    	SpriteSheet ss = new SpriteSheet(streetTiles);
-    	
-    	street = ss.grabImage(4, 4, 32, 32);
-    	streetLR = ss.grabImage(4, 1, 32, 32);
-    	streetUD = ss.grabImage(1, 4, 32, 32);
-    	
+	world = new World();
+	world.populateRoads(WIDTH / 8, HEIGHT / 8);
+	this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+	new Thread(() -> {
+	    while (true)
+	    {
+		world.update();
+		repaint();
+		try
+		{
+		    Thread.sleep(16);
+		} catch (InterruptedException e)
+		{
+		    e.printStackTrace();
+		}
+	    }
+	}).start();
     }
-    
+
     @Override
-    public void paint(Graphics g) 
+    public void paint(Graphics g)
     {
-		Graphics2D g2d = (Graphics2D)g;
-		for(RoadNode node : world.intersections) 
-		{
-		    if(node.connections[0] != null) // Right
-		    {
-				g2d.setColor(Color.GRAY);
-				//g2d.fillRect(node.x * 16 + 8, node.y * 16, 320, 32);
-				
-				for (int i = 4; i <= 16; i += 4) 
-				{
-					g2d.drawImage(streetLR, node.x * 16 + 8*i, node.y * 16, null);	
-				}
-		    }
-		    if(node.connections[3] != null) // Down
-		    {
-				g2d.setColor(Color.GRAY);
-				//g2d.fillRect(node.x * 16, node.y * 16 + 8, 32, 320);
-				for (int i = 4; i <= 16; i += 4) 
-				{
-					g2d.drawImage(streetUD, node.x * 16, node.y * 16 + 8*i, null);	
-				}
-		    }
-		}
-		for(RoadNode node : world.intersections) 
-		{
-		    g2d.setColor(Color.RED);
-		    g2d.fillRect(node.x * 16, node.y * 16, 32, 32);
-		    g2d.drawImage(street, node.x * 16, node.y * 16, null);
-		    if(node.x * 8 > 640)
-		    	System.out.println(node.x * 8);
-		}
+	super.paint(g);
+	Graphics2D g2d = (Graphics2D) g;
+	for (RoadNode node : world.intersections)
+	{
+	    if (node.connections[0] != null) // Right
+	    {
+		g2d.setColor(Color.GRAY);
+		g2d.fillRect(node.x * 8 + 8, node.y * 8, 80, 8);
+	    }
+	    if (node.connections[3] != null) // Down
+	    {
+		g2d.setColor(Color.GRAY);
+		g2d.fillRect(node.x * 8, node.y * 8 + 8, 8, 80);
+	    }
+	}
+	for (RoadNode node : world.intersections)
+	{
+	    g2d.setColor(Color.RED);
+	    g2d.fillRect(node.x * 8, node.y * 8, 8, 8);
+	}
+	for (Car car : world.cars)
+	{
+	    g2d.setColor(Color.BLUE);
+	    if(car.path.size() <= 1)
+		continue;
+	    RoadNode.Connection target = car.target();
+	    RoadNode start = car.path.get(0);
+	    RoadNode next = car.path.get(1);
+	    int x = ((int) ((next.x - start.x) * (car.progress / target.length) + start.x) * 8);
+	    int y = ((int) ((next.y - start.y) * (car.progress / target.length) + start.x) * 8);
+	    g2d.fillRect(x, y, 8, 8);
+	}
     }
 }
