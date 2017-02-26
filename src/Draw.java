@@ -15,7 +15,7 @@ public class Draw extends JPanel
 	World world;
 	Camera cam;
 
-	private final int WIDTH = 640, HEIGHT = 480;
+	private final int WIDTH = 1440, HEIGHT = 960;
 	private Camera camera, cameraVelocity, cameraTarget;
 	private BufferedImage carFile, streetTilesFile, trafficLightFile, buildingFile, bCarFile, rCarFile;
 
@@ -124,7 +124,7 @@ public class Draw extends JPanel
 					break;
 				}
 			}
-			
+
 			public void keyReleased(KeyEvent e)
 			{
 				switch (e.getKeyCode())
@@ -161,9 +161,9 @@ public class Draw extends JPanel
 		camera.y += (cameraTarget.y - camera.y) / 32;
 		g2d.translate(-camera.x, -camera.y);
 
-		for (int x = 0; x < WIDTH * 3; x += 32)
+		for (int x = (int)((camera.x - 32)/32)*32; x < camera.x + WIDTH + 64; x += 32)
 		{
-			for (int y = 0; y < HEIGHT * 2; y += 32)
+			for (int y = (int)((camera.y - 32)/32)*32; y < camera.y + HEIGHT + 64; y += 32)
 			{
 				g2d.drawImage(building, x, y, null);
 			}
@@ -209,6 +209,7 @@ public class Draw extends JPanel
 					//System.out.println("!!!!!!!!!!!!!!!!");
 				}
 				else if (node.light.vertical)
+
 					g2d.drawImage(trafficLight[1], node.x * 16, node.y * 16, null);
 				else
 					g2d.drawImage(trafficLight[0], node.x * 16, node.y * 16, null);
@@ -265,6 +266,7 @@ public class Draw extends JPanel
 		//int carColor = (int) (Math.random() * 3);
 		System.out.println(car.carColor);
 		if (car.carColor == 0)
+
 			if (next.x - start.x > 0)
 				g2d.drawImage(carPic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
 			else if (next.x - start.x < 0)
@@ -305,5 +307,24 @@ public class Draw extends JPanel
 	    }
 	    // g2d.drawImage(trafficLight[0], node.light.x * 16, node.light.y *
 	    // 16, null);
+
+
+			//System.out.println(car.getTileX() * 16 + "," + car.getTileY() * 16);
+		}
+		for (RoadNode node : world.intersections)
+		{
+			if (node.light != null)
+			{
+				if (node.light.switchCooldown > 0)
+					g2d.drawImage(trafficLight[2], node.x * 16, node.y * 16, null);
+				else if (node.light.vertical)
+					g2d.drawImage(trafficLight[1], node.x * 16, node.y * 16, null);
+				else
+					g2d.drawImage(trafficLight[0], node.x * 16, node.y * 16, null);
+			}
+			// g2d.drawImage(trafficLight[0], node.light.x * 16, node.light.y *
+			// 16, null);
+		}
+
 	}
-}}
+}
