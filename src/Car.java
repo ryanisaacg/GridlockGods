@@ -57,7 +57,6 @@ public class Car
     {
 	if (path.size() <= 1)
 	{
-	    System.out.println("Reached destination");
 	    return true;
 	}
 	RoadNode.Connection connect = target();
