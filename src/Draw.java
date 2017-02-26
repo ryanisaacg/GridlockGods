@@ -28,7 +28,7 @@ public class Draw extends JPanel {
 		camera = new Camera(0, 0);
 		//cam = new Camera(1440, 960);
 		
-		world.populateRoads(WIDTH, HEIGHT);
+		world.populateRoads(WIDTH/ 10, HEIGHT /10);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
 		new Thread(() -> {
