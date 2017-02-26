@@ -10,6 +10,7 @@ public class Draw extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	World world;
+	Camera cam;
 
 	private final int WIDTH = 640, HEIGHT = 480;
 	private BufferedImage carFile, streetTilesFile, trafficLightFile, buildingFile;
@@ -21,6 +22,8 @@ public class Draw extends JPanel {
 
 	public Draw() {
 		world = new World();
+		cam = new Camera(1440, 960);
+		
 		world.populateRoads(WIDTH, HEIGHT);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
@@ -99,6 +102,7 @@ public class Draw extends JPanel {
 		for (RoadNode node : world.intersections) {
 			g2d.setColor(Color.RED);
 			g2d.drawImage(street1[3][3], node.x * 16, node.y * 16, null);
+			g2d.drawImage(trafficLight[0], node.x * 16 , node.y * 16 , null);
 			g2d.fillOval(node.x * 16 + 10, node.y * 16 + 10, 8, 8);
 			if (node.x * 8 > 640)
 				System.out.println(node.x * 8);
@@ -123,5 +127,6 @@ public class Draw extends JPanel {
 		{
 			g2d.drawImage(trafficLight[0], light.node.x * 16 + 12, light.node.y * 16 + 12, null);
 		}
+		g.translate(-cam.getX(), -cam.getY());
 	}
 }
