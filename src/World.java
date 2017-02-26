@@ -63,7 +63,7 @@ public class World
 	for(int i = 0; i < 15; i++) {
 	    Spawner spawn = new Spawner();
 	    spawn.entrypoint = intersections.get(rand.nextInt(intersections.size()));
-	    spawn.spawnWeight = 0.005f;
+	    spawn.spawnWeight = rand.nextFloat() / 25;
 	    spawners.add(spawn);
 	}
     }
