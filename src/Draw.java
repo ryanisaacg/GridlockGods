@@ -104,8 +104,6 @@ public class Draw extends JPanel {
 			g2d.drawImage(street1[3][3], node.x * 16, node.y * 16, null);
 			g2d.drawImage(trafficLight[0], node.x * 16 , node.y * 16 , null);
 			g2d.fillOval(node.x * 16 + 10, node.y * 16 + 10, 8, 8);
-			if (node.x * 8 > 640)
-				System.out.println(node.x * 8);
 		}
 		for (Car car : world.cars) {
 			g2d.setColor(Color.BLUE);

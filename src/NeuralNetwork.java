@@ -65,16 +65,17 @@ public class NeuralNetwork
 		Matrix[] derivatives = costPrime(exp.state, new Matrix(1, 2, exp.reward).plus(
 				new Matrix(1, 2, max(this.forward(exp.newState)))).times(DISCOUT_RATE));
 
-		weights[0] = weights[0].minus(derivatives[0].times(LEARNING_RATE));
-		weights[1] = weights[1].minus(derivatives[1].times(LEARNING_RATE));
+		weights[0] = weights[0].minus(derivatives[1].times(LEARNING_RATE));
+		weights[1] = weights[1].minus(derivatives[0].times(LEARNING_RATE));
 	}
 	
 	public Matrix[] costPrime(Matrix input, Matrix output)
 	{
+		//prediction: 1x2
 		Matrix prediction = this.forward(input);
 		
 		Matrix errorFinal = output.minus(prediction).times(-1).arrayTimes(activity[1]);
-		Matrix djdW2 = activation[1].transpose().times(errorFinal);
+		Matrix djdW2 = activation[0].transpose().times(errorFinal);
 		
 		Matrix errorBefore = errorFinal.times(weights[1].transpose())
 			.arrayTimes(sigmoidPrime(activity[0]));
