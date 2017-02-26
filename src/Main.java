@@ -6,7 +6,7 @@ public class Main
 {
     public static void main(String[] args)
     {
-		JFrame frame = new JFrame();
+		JFrame frame = new JFrame("RusHour");
 	
 		int width = 1440;
 		int height = 960;
@@ -19,6 +19,7 @@ public class Main
 
 		frame.setContentPane(new Draw());
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.pack();
 		frame.setVisible(true);
 

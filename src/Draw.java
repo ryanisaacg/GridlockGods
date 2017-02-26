@@ -264,7 +264,7 @@ public class Draw extends JPanel
 		RoadNode next = car.path.get(1);
 		
 		//int carColor = (int) (Math.random() * 3);
-		System.out.println(car.carColor);
+		//System.out.println(car.carColor);
 		if (car.carColor == 0)
 
 			if (next.x - start.x > 0)
