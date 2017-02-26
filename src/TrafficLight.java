@@ -7,7 +7,7 @@ public class TrafficLight
     boolean vertical;
     Matrix previous, current;
     float previous_anger, current_anger;
-    int switchCooldown = 0;
+    int switchCooldown = 0, greenCooldown = 0;
 
     public TrafficLight(RoadNode node)
     {
@@ -21,6 +21,7 @@ public class TrafficLight
 	if (network.shouldToggle(previous))
 	    vertical = !vertical;
 	switchCooldown = 60;
+	greenCooldown = 0;
     }
 
     private float totalAnger()
@@ -60,6 +61,10 @@ public class TrafficLight
 	if (switchCooldown > 0)
 	{
 	    switchCooldown--;
+	    if (switchCooldown == 0)
+	    {
+		greenCooldown = 60;
+	    }
 	} else
 	{
 	    fillMatrix(current);
@@ -70,10 +75,16 @@ public class TrafficLight
 		network.learn();
 		network.EXPLORATION *= 0.95;
 	    }
-	    if (network.shouldToggle(current))
+	    if (greenCooldown <= 0)
 	    {
-		vertical = !vertical;
-		switchCooldown = 60;
+		if (network.shouldToggle(current))
+		{
+		    vertical = !vertical;
+		    switchCooldown = 60;
+		}
+	    } else
+	    {
+		greenCooldown--;
 	    }
 	}
     }
