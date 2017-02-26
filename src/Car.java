@@ -15,19 +15,33 @@ public class Car
 	aStar(start, endGoal);
 	this.progress = 0;
     }
-    
+
     public int getTileX()
     {
-	RoadNode start = path.get(0);
-	RoadNode next = path.get(1);
-	return (int) ((next.x - start.x) * (progress / target().length) + start.x);
+	if (path.size() == 0)
+	    return 0;
+	else if (path.size() == 1)
+	    return path.get(0).x;
+	else
+	{
+	    RoadNode start = path.get(0);
+	    RoadNode next = path.get(1);
+	    return (int) ((next.x - start.x) * (progress / target().length) + start.x);
+	}
     }
-    
+
     public int getTileY()
     {
-	RoadNode start = path.get(0);
-	RoadNode next = path.get(1);
-	return (int)((next.y - start.y) * (progress / target().length) + start.y);
+	if (path.size() == 0)
+	    return 0;
+	else if (path.size() == 1)
+	    return path.get(0).y;
+	else
+	{
+	    RoadNode start = path.get(0);
+	    RoadNode next = path.get(1);
+	    return (int) ((next.y - start.y) * (progress / target().length) + start.y);
+	}
     }
 
     public RoadNode.Connection target()
@@ -50,8 +64,7 @@ public class Car
 	if (progress >= connect.length)
 	{
 	    boolean horizontal = path.get(0).x == path.get(1).x;
-	    if (connect.endpoint.light == null 
-		    || horizontal != connect.endpoint.light.vertical)
+	    if (connect.endpoint.light == null || horizontal != connect.endpoint.light.vertical)
 	    {
 		connect.traveling.remove(this);
 		path.remove(0);
