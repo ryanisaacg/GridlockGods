@@ -4,14 +4,16 @@ import java.util.Random;
 
 public class World
 {
-    List<RoadNode> intersections;
+    List<TrafficLight> trafficLights;
+	List<RoadNode> intersections;
     List<Spawner> spawners;
     List<Car> cars;
     Random rand;
 
     public World()
     {
-		intersections = new ArrayList<>();
+		trafficLights = new ArrayList<>();
+    	intersections = new ArrayList<>();
 		spawners = new ArrayList<>();
 		cars = new ArrayList<>();
 		rand = new Random();
