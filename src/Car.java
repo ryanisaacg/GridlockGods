@@ -18,6 +18,11 @@ public class Car
 
     public int getTileX()
     {
+	return getTileXFuture(0);
+    }
+    
+    public int getTileXFuture(int future)
+    {
 	if (path.size() == 0)
 	    return 0;
 	else if (path.size() == 1)
@@ -26,11 +31,11 @@ public class Car
 	{
 	    RoadNode start = path.get(0);
 	    RoadNode next = path.get(1);
-	    return (int) ((next.x - start.x) * ((progress - 1) / target().length) + start.x);
+	    return (int) ((next.x - start.x) * (Math.max(progress - 1 + future, 0) / target().length) + start.x);
 	}
     }
-
-    public int getTileY()
+    
+    public int getTileYFuture(int future)
     {
 	if (path.size() == 0)
 	    return 0;
@@ -40,8 +45,13 @@ public class Car
 	{
 	    RoadNode start = path.get(0);
 	    RoadNode next = path.get(1);
-	    return (int) ((next.y - start.y) * ((progress - 1) / target().length) + start.y);
+	    return (int) ((next.y - start.y) * (Math.max(progress - 1 + future, 0) / target().length) + start.y);
 	}
+    }
+
+    public int getTileY()
+    {
+	return getTileYFuture(0);
     }
 
     public RoadNode.Connection target()
@@ -53,7 +63,7 @@ public class Car
 	return connect;
     }
 
-    public boolean update()
+    public boolean update(World world)
     {
 	if (path.size() <= 1)
 	{
@@ -75,7 +85,10 @@ public class Car
 	    }
 	} else
 	{
-	    progress += connect.speed;
+	    if(world.carFree(connect.traveling, getTileXFuture(1), getTileYFuture(1)))
+	    {
+		progress += connect.speed;
+	    }
 	    if (!connect.traveling.contains(this))
 		connect.traveling.contains(this);
 	}
