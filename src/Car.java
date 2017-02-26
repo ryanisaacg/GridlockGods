@@ -15,6 +15,20 @@ public class Car
 	aStar(start, endGoal);
 	this.progress = 0;
     }
+    
+    public int getTileX()
+    {
+	RoadNode start = path.get(0);
+	RoadNode next = path.get(1);
+	return (int) ((next.x - start.x) * (progress / target().length) + start.x);
+    }
+    
+    public int getTileY()
+    {
+	RoadNode start = path.get(0);
+	RoadNode next = path.get(1);
+	return (int)((next.y - start.y) * (progress / target().length) + start.y);
+    }
 
     public RoadNode.Connection target()
     {

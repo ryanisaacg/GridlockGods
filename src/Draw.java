@@ -116,20 +116,17 @@ public class Draw extends JPanel
 	    g2d.setColor(Color.BLUE);
 	    if (car.path.size() <= 1)
 		continue;
-	    RoadNode.Connection target = car.target();
 	    RoadNode start = car.path.get(0);
 	    RoadNode next = car.path.get(1);
-	    int x = ((int) ((next.x - start.x) * (car.progress / target.length) + start.x) * 16);
-	    int y = ((int) ((next.y - start.y) * (car.progress / target.length) + start.y) * 16);
 
 	    if (next.x - start.x > 0)
-		g2d.drawImage(carPic[0][0], x, y, null);
+		g2d.drawImage(carPic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
 	    if (next.x - start.x < 0)
-		g2d.drawImage(carPic[1][1], x, y, null);
+		g2d.drawImage(carPic[1][1], car.getTileX() * 16, car.getTileY() * 16, null);
 	    if (next.y - start.y > 0)
-		g2d.drawImage(carPic[0][1], x, y, null);
+		g2d.drawImage(carPic[0][1], car.getTileX() * 16, car.getTileY() * 16, null);
 	    if (next.y - start.y < 0)
-		g2d.drawImage(carPic[1][0], x, y, null);
+		g2d.drawImage(carPic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
 	}
     }
 }
