@@ -17,10 +17,18 @@ public class World
 	rand = new Random();
     }
     
+    public boolean carFree(int x, int y)
+    {
+	for(Car car : cars)
+	    if(car.getTileX() == x && car.getTileY() == y)
+		return false;
+	return true;
+    }
+    
     public void update()
     {
 	for(Spawner spawn : spawners)
-	    if(rand.nextFloat() <= spawn.spawnWeight)
+	    if(rand.nextFloat() <= spawn.spawnWeight && carFree(spawn.entrypoint.x, spawn.entrypoint.y))
 		cars.add(new Car(spawn.entrypoint, intersections.get(rand.nextInt(intersections.size()))));
 	for(int i = 0; i < cars.size(); i++)
 	{
