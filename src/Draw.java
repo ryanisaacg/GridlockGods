@@ -41,7 +41,7 @@ public class Draw extends JPanel {
 
 		BufferedImageLoader loader = new BufferedImageLoader();
 
-		carFile = loader.loadImage("/car.png");
+		carFile = loader.loadImage("/Car.png");
 		streetTilesFile = loader.loadImage("/StreetTiles.png");
 		trafficLightFile = loader.loadImage("/TrafficLight.png");
 		buildingFile = loader.loadImage("/Building.png");
@@ -116,12 +116,14 @@ public class Draw extends JPanel {
 
 			if (next.x - start.x > 0)
 				g2d.drawImage(carPic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
-			if (next.x - start.x < 0)
+			else if (next.x - start.x < 0)
 				g2d.drawImage(carPic[1][1], car.getTileX() * 16, car.getTileY() * 16, null);
-			if (next.y - start.y > 0)
+			else if (next.y - start.y > 0)
 				g2d.drawImage(carPic[0][1], car.getTileX() * 16, car.getTileY() * 16, null);
-			if (next.y - start.y < 0)
+			else if (next.y - start.y < 0)
 				g2d.drawImage(carPic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
+			
+			System.out.println(car.getTileX() * 16 + "," + car.getTileY() * 16);
 		}
 		for (RoadNode node : world.intersections) 
 		{
