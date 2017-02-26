@@ -55,10 +55,12 @@ public class World
 	    RoadNode removed = intersections.remove(index);
 	    removed.die();
 	}
-	Spawner root = new Spawner();
-	root.entrypoint = node;
-	root.spawnWeight = 0.05f;
-	spawners.add(root);
+	for(int i = 0; i < 15; i++) {
+	    Spawner spawn = new Spawner();
+	    spawn.entrypoint = intersections.get(rand.nextInt(intersections.size()));
+	    spawn.spawnWeight = 0.005f;
+	    spawners.add(spawn);
+	}
     }
 
     private RoadNode containsPosition(int x, int y)
