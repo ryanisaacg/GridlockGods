@@ -53,6 +53,12 @@ public class RoadNode
 	{
 	    if (connections[i] == null)
 		continue;
+	    int numConnect = 0;
+	    for (int j = 0; j < 4; j++)
+		if (connections[i].endpoint.connections[j] != null)
+		    numConnect++;
+	    if(numConnect <= 2)
+		connections[i].endpoint.light = null;
 	    connections[i].endpoint.connections[(i + 2) % 4] = null;
 	}
     }
