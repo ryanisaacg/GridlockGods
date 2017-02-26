@@ -76,7 +76,8 @@ public class NeuralNetwork
 		Matrix errorFinal = output.minus(prediction).times(-1).arrayTimes(activity[1]);
 		Matrix djdW2 = activation[1].transpose().times(errorFinal);
 		
-		Matrix errorBefore = errorFinal.times(weights[1].transpose()).times(sigmoidPrime(activity[0]));
+		Matrix errorBefore = errorFinal.times(weights[1].transpose())
+			.arrayTimes(sigmoidPrime(activity[0]));
 		Matrix djdW1 = input.transpose().times(errorBefore);
 		
 		return new Matrix[]{djdW2, djdW1};
