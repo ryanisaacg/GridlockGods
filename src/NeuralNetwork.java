@@ -2,7 +2,7 @@ import Jama.Matrix;
 
 public class NeuralNetwork
 {
-	final double DISCOUT_RATE = 0.92, LEARNING_RATE = 0.6;
+	final double DISCOUT_RATE = 0.92, LEARNING_RATE = 0.6, EXPLORATION = 0.9;
 	Matrix[] weights, activity, activation;
 	Experience[] memory;
 	
@@ -16,7 +16,7 @@ public class NeuralNetwork
 		weights = new Matrix[layerSizes.length-1];
 		activity = new Matrix[layerSizes.length-1];
 		activation = new Matrix[layerSizes.length-1];
-		memory = new Experience[2000];
+		memory = new Experience[500];
 		for(int i = 0; i < weights.length; i++)
 		{
 			double[][] weight = new double[layerSizes[i]][layerSizes[i+1]];
@@ -42,6 +42,22 @@ public class NeuralNetwork
 	public void newExperience(Matrix s, double r, Matrix nS)
 	{
 		memory[(int)(Math.random()*memory.length)] = new Experience(s, r, nS);
+	}
+	
+	public boolean shouldToggle(Matrix input)
+	{
+		Matrix m = this.forward(input);
+		if(Math.random() < EXPLORATION)
+			return Math.random() < 0.1;
+		else
+			return m.get(0, 0) > m.get(0, 1);
+	}
+	
+	public void learn()
+	{
+		for(int i = 0; i < memory.length; i++)
+			if(memory[i] != null)
+				this.learn(memory[i]);
 	}
 	
 	public void learn(Experience exp)
