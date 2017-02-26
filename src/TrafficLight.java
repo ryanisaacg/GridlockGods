@@ -58,7 +58,11 @@ public class TrafficLight
 	fillMatrix(current);
 	current_anger = totalAnger();
 	network.newExperience(previous, current_anger, current);
-	network.learn();
+	if(Math.random() < 0.015)
+	{
+	    network.learn();
+	    network.EXPLORATION *= 0.95;
+	}
 	if(network.shouldToggle(current))
 	    vertical = !vertical;
     }
