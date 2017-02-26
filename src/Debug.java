@@ -69,7 +69,6 @@ public class Debug extends JPanel
 	    int x = ((int) ((next.x - start.x) * (car.progress / target.length) + start.x) * 8);
 	    int y = ((int) ((next.y - start.y) * (car.progress / target.length) + start.y) * 8);
 	    g2d.fillRect(x, y, 8, 8);
-	    System.out.println(start.x + "," + start.y);
 	}
     }
 }
