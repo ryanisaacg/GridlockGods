@@ -26,7 +26,7 @@ public class Car
 	{
 	    RoadNode start = path.get(0);
 	    RoadNode next = path.get(1);
-	    return (int) ((next.x - start.x) * (progress / target().length) + start.x);
+	    return (int) ((next.x - start.x) * ((progress - 1) / target().length) + start.x);
 	}
     }
 
@@ -40,7 +40,7 @@ public class Car
 	{
 	    RoadNode start = path.get(0);
 	    RoadNode next = path.get(1);
-	    return (int) ((next.y - start.y) * (progress / target().length) + start.y);
+	    return (int) ((next.y - start.y) * ((progress - 1) / target().length) + start.y);
 	}
     }
 
