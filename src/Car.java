@@ -73,7 +73,7 @@ public class Car
 	if (progress >= connect.length)
 	{
 	    boolean horizontal = path.get(0).x == path.get(1).x;
-	    if (connect.endpoint.light == null || horizontal != connect.endpoint.light.vertical)
+	    if (connect.endpoint.light == null || (connect.endpoint.light.switchCooldown == 0 && horizontal != connect.endpoint.light.vertical))
 	    {
 		connect.traveling.remove(this);
 		path.remove(0);

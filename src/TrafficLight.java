@@ -7,7 +7,8 @@ public class TrafficLight
     boolean vertical;
     Matrix previous, current;
     float previous_anger, current_anger;
-    
+    int switchCooldown = 0;
+
     public TrafficLight(RoadNode node)
     {
 	this.node = node;
@@ -17,53 +18,63 @@ public class TrafficLight
 	current = new Matrix(1, 5);
 	previous_anger = totalAnger();
 	fillMatrix(previous);
-	if(network.shouldToggle(previous))
+	if (network.shouldToggle(previous))
 	    vertical = !vertical;
+	switchCooldown = 60;
     }
-    
-    private float totalAnger() 
+
+    private float totalAnger()
     {
 	float anger = 0;
-	for(int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
-	    if(node.connections[i] != null)
+	    if (node.connections[i] != null)
 	    {
-		for(Car car : node.connections[i].traveling)
+		for (Car car : node.connections[i].traveling)
 		    anger += car.waitingTime;
 	    }
 	}
 	return anger;
     }
-    
+
     private void fillMatrix(Matrix m)
     {
-	for(int i = 0; i < 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
-	    if(node.connections[i] == null)
+	    if (node.connections[i] == null)
 	    {
 		m.set(0, i, 0);
 	    } else
 	    {
 		float anger = 0;
-		for(Car car : node.connections[i].traveling)
+		for (Car car : node.connections[i].traveling)
 		    anger += car.waitingTime;
 		m.set(0, i, anger);
 	    }
 	}
 	m.set(0, 4, vertical ? 1 : 0);
     }
-    
+
     public void update()
     {
-	fillMatrix(current);
-	current_anger = totalAnger();
-	network.newExperience(previous, current_anger, current);
-	if(Math.random() < 0.015)
+	if (switchCooldown > 0)
 	{
-	    network.learn();
-	    network.EXPLORATION *= 0.95;
+	    switchCooldown--;
+	} else
+	{
+	    fillMatrix(current);
+	    current_anger = totalAnger();
+	    network.newExperience(previous, current_anger, current);
+	    if (Math.random() < 0.015)
+	    {
+		network.learn();
+		network.EXPLORATION *= 0.95;
+	    }
+	    if (network.shouldToggle(current))
+	    {
+		vertical = !vertical;
+		switchCooldown = 60;
+	    }
 	}
-	if(network.shouldToggle(current))
-	    vertical = !vertical;
     }
 }
