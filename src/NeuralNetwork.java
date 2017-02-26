@@ -2,7 +2,8 @@ import Jama.Matrix;
 
 public class NeuralNetwork
 {
-	final double DISCOUT_RATE = 0.92, LEARNING_RATE = 0.6, EXPLORATION = 0.9;
+	final double DISCOUT_RATE = 0.92, LEARNING_RATE = 0.6;
+	double EXPLORATION = 0.9;
 	Matrix[] weights, activity, activation;
 	Experience[] memory;
 	
