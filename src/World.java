@@ -11,10 +11,10 @@ public class World
 
     public World()
     {
-	intersections = new ArrayList<>();
-	spawners = new ArrayList<>();
-	cars = new ArrayList<>();
-	rand = new Random();
+		intersections = new ArrayList<>();
+		spawners = new ArrayList<>();
+		cars = new ArrayList<>();
+		rand = new Random();
     }
     
     public void update()
@@ -26,8 +26,8 @@ public class World
 	{
 	    if(cars.get(i).update())
 	    {
-		cars.remove(i);
-		i--;
+	    	cars.remove(i);
+	    	i--;
 	    }
 	}
     }
