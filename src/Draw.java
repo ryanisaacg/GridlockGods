@@ -199,25 +199,6 @@ public class Draw extends JPanel
 			// if (node.x * 8 > 640)
 			// System.out.println(node.x * 8);
 		}
-		for (Car car : world.cars)
-		{
-			g2d.setColor(Color.BLUE);
-			if (car.path.size() <= 1)
-				continue;
-			RoadNode start = car.path.get(0);
-			RoadNode next = car.path.get(1);
-
-			if (next.x - start.x > 0)
-				g2d.drawImage(carPic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
-			else if (next.x - start.x < 0)
-				g2d.drawImage(carPic[1][1], car.getTileX() * 16, car.getTileY() * 16, null);
-			else if (next.y - start.y > 0)
-				g2d.drawImage(carPic[0][1], car.getTileX() * 16, car.getTileY() * 16, null);
-			else if (next.y - start.y < 0)
-				g2d.drawImage(carPic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
-
-			System.out.println(car.getTileX() * 16 + "," + car.getTileY() * 16);
-		}
 		for (RoadNode node : world.intersections)
 		{
 			if (node.light != null)
@@ -225,7 +206,7 @@ public class Draw extends JPanel
 				if (node.light.switchCooldown > 0)
 				{
 					g2d.drawImage(trafficLight[2], node.x * 16, node.y * 16, null);
-					System.out.println("!!!!!!!!!!!!!!!!");
+					//System.out.println("!!!!!!!!!!!!!!!!");
 				}
 				else if (node.light.vertical)
 					g2d.drawImage(trafficLight[1], node.x * 16, node.y * 16, null);
@@ -275,22 +256,41 @@ public class Draw extends JPanel
 	}
 	for (Car car : world.cars)
 	{
-	    g2d.setColor(Color.BLUE);
-	    if (car.path.size() <= 1)
-		continue;
-	    RoadNode start = car.path.get(0);
-	    RoadNode next = car.path.get(1);
-
-	    if (next.x - start.x > 0)
-		g2d.drawImage(carPic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
-	    else if (next.x - start.x < 0)
-		g2d.drawImage(carPic[1][1], car.getTileX() * 16, car.getTileY() * 16, null);
-	    else if (next.y - start.y > 0)
-		g2d.drawImage(carPic[0][1], car.getTileX() * 16, car.getTileY() * 16, null);
-	    else if (next.y - start.y < 0)
-		g2d.drawImage(carPic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
-
-	    System.out.println(car.getTileX() * 16 + "," + car.getTileY() * 16);
+		g2d.setColor(Color.BLUE);
+		if (car.path.size() <= 1)
+			continue;
+		RoadNode start = car.path.get(0);
+		RoadNode next = car.path.get(1);
+		
+		//int carColor = (int) (Math.random() * 3);
+		System.out.println(car.carColor);
+		if (car.carColor == 0)
+			if (next.x - start.x > 0)
+				g2d.drawImage(carPic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.x - start.x < 0)
+				g2d.drawImage(carPic[1][1], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.y - start.y > 0)
+				g2d.drawImage(carPic[0][1], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.y - start.y < 0)
+				g2d.drawImage(carPic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
+		if (car.carColor == 1)
+			if (next.x - start.x > 0)
+				g2d.drawImage(bCarFilePic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.x - start.x < 0)
+				g2d.drawImage(bCarFilePic[1][1], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.y - start.y > 0)
+				g2d.drawImage(bCarFilePic[0][1], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.y - start.y < 0)
+				g2d.drawImage(bCarFilePic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
+		if (car.carColor == 2)
+			if (next.x - start.x > 0)
+				g2d.drawImage(rCarFilePic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.x - start.x < 0)
+				g2d.drawImage(rCarFilePic[1][1], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.y - start.y > 0)
+				g2d.drawImage(rCarFilePic[0][1], car.getTileX() * 16, car.getTileY() * 16, null);
+			else if (next.y - start.y < 0)
+				g2d.drawImage(rCarFilePic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
 	}
 	for (RoadNode node : world.intersections)
 	{

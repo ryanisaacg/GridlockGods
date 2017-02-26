@@ -8,6 +8,7 @@ public class Car
     public static int CAR_LENGTH = 1;
     public List<RoadNode> path;
     public float progress, waitingTime;
+    public int carColor = (int) (Math.random() * 3);
 
     public Car(RoadNode start, RoadNode endGoal)
     {
