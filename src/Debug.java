@@ -17,6 +17,7 @@ public class Debug extends JPanel
     private BufferedImage car, streetTiles, trafficLight;
     
     private BufferedImage street, streetLR, streetUD;
+    private BufferedImage[][] street1 = new BufferedImage[4][4];
     
     public Debug()
     {
@@ -32,9 +33,19 @@ public class Debug extends JPanel
     	
     	SpriteSheet ss = new SpriteSheet(streetTiles);
     	
+    	for (int i = 0; i < 4; i++) 
+    	{
+    		for (int j = 0; j < 4; j++) 
+    		{
+    			//street1[i][j] = ss.grabImage(i, j, 32, 32);
+    		}
+    	}
+    	
+    	
+    	
     	street = ss.grabImage(4, 4, 32, 32);
-    	streetLR = ss.grabImage(4, 1, 32, 32);
-    	streetUD = ss.grabImage(1, 4, 32, 32);
+    	streetLR = ss.grabImage(1, 4, 32, 32);
+    	streetUD = ss.grabImage(4, 1, 32, 32);
     	
     }
     

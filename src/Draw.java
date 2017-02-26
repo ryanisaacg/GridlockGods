@@ -82,8 +82,8 @@ public class Draw extends JPanel
 		for(RoadNode node : world.intersections) 
 		{
 		    g2d.setColor(Color.RED);
-		    g2d.fillRect(node.x * 16, node.y * 16, 32, 32);
 		    g2d.drawImage(street1[3][3], node.x * 16, node.y * 16, null);
+		    g2d.fillOval(node.x * 16 + 10, node.y * 16 + 10, 8, 8);
 		    if(node.x * 8 > 640)
 		    	System.out.println(node.x * 8);
 		}

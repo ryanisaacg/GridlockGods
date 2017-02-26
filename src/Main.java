@@ -16,7 +16,7 @@ public class Main
 		frame.setMinimumSize(new Dimension(width, height));
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(new Debug());
+		frame.setContentPane(new Draw());
 		frame.setResizable(false);
 		frame.pack();
 		frame.setVisible(true);
