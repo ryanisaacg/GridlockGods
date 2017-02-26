@@ -19,6 +19,8 @@ public class RoadNode
 	}
     }
 
+    TrafficLight light;
+
     Connection[] connections;
 
     int x, y;
@@ -34,6 +36,15 @@ public class RoadNode
     {
 	connections[direction] = new Connection(endpoint, length, speed);
 	endpoint.connections[(direction + 2) % 4] = new Connection(this, length, speed);
+	if (light == null)
+	{
+	    int numConnect = 0;
+	    for (int i = 0; i < 4; i++)
+		if (connections[i] != null)
+		    numConnect++;
+	    if (numConnect > 2)
+		light = new TrafficLight(this);
+	}
     }
 
     public void die()
