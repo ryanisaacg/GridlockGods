@@ -18,8 +18,13 @@ public class World
 	cars = new ArrayList<>();
 	rand = new Random();
     }
-
+    
     public boolean carFree(int x, int y)
+    {
+	return carFree(cars, x, y);
+    }
+
+    public boolean carFree(List<Car> cars, int x, int y)
     {
 	for (Car car : cars)
 	    if (car.getTileX() == x && car.getTileY() == y)
@@ -37,7 +42,7 @@ public class World
 	    	node.light.update();
 	for(int i = 0; i < cars.size(); i++)
 	{
-	    if(cars.get(i).update())
+	    if(cars.get(i).update(this))
 	    {
 	    	cars.remove(i);
 	    	i--;
