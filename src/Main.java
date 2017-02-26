@@ -7,11 +7,10 @@ public class Main
     public static void main(String[] args)
     {
 		JFrame frame = new JFrame();
-		
+	
 		int width = 1440;
 		int height = 960;
 	
-		new NeuralNetwork(new int[]{1});
 		frame.setPreferredSize(new Dimension(width, height));
 		frame.setMaximumSize(new Dimension(width, height));
 		frame.setMinimumSize(new Dimension(width, height));

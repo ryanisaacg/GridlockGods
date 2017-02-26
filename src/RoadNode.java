@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoadNode
@@ -7,18 +8,19 @@ public class RoadNode
 	RoadNode endpoint;
 	int length;
 	float speed;
-	List<Car> incoming;
+	List<Car> traveling;
 
 	public Connection(RoadNode endpoint, int length, float speed)
 	{
 	    this.endpoint = endpoint;
 	    this.length = length;
 	    this.speed = speed;
+	    traveling = new ArrayList<>();
 	}
     }
 
     Connection[] connections;
-    
+
     int x, y;
 
     public RoadNode(int x, int y)
@@ -31,5 +33,21 @@ public class RoadNode
     public void addConnection(int direction, RoadNode endpoint, int length, float speed)
     {
 	connections[direction] = new Connection(endpoint, length, speed);
+	endpoint.connections[(direction + 2) % 4] = new Connection(this, length, speed);
+    }
+
+    public void die()
+    {
+	for (int i = 0; i < 4; i++)
+	{
+	    if (connections[i] == null)
+		continue;
+	    connections[i].endpoint.connections[(i + 2) % 4] = null;
+	}
+    }
+
+    public String toString()
+    {
+	return "Node: " + x + "," + y;
     }
 }
