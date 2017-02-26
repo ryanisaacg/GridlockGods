@@ -31,7 +31,7 @@ public class Car
 	{
 	    RoadNode start = path.get(0);
 	    RoadNode next = path.get(1);
-	    return (int) ((next.x - start.x) * ((progress - 1 + future) / target().length) + start.x);
+	    return (int) ((next.x - start.x) * (Math.max(progress - 1 + future, 0) / target().length) + start.x);
 	}
     }
     
@@ -45,7 +45,7 @@ public class Car
 	{
 	    RoadNode start = path.get(0);
 	    RoadNode next = path.get(1);
-	    return (int) ((next.y - start.y) * ((progress - 1 + future) / target().length) + start.y);
+	    return (int) ((next.y - start.y) * (Math.max(progress - 1 + future, 0) / target().length) + start.y);
 	}
     }
 
