@@ -45,7 +45,7 @@ public class Draw extends JPanel {
 
 		BufferedImageLoader loader = new BufferedImageLoader();
 
-		carFile = loader.loadImage("/Car.png");
+		carFile = loader.loadImage("/Car1.png");
 		streetTilesFile = loader.loadImage("/StreetTiles.png");
 		trafficLightFile = loader.loadImage("/TrafficLight.png");
 		buildingFile = loader.loadImage("/Building.png");
