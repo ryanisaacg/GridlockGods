@@ -18,11 +18,11 @@ public class Draw extends JPanel {
 	private BufferedImage building;
 	private BufferedImage[][] street1 = new BufferedImage[4][4];
 	private BufferedImage[][] carPic = new BufferedImage[2][2];
-	private BufferedImage[] trafficLight = new BufferedImage[3];
+	private BufferedImage[] trafficLight = new BufferedImage[2];
 
 	public Draw() {
 		world = new World();
-		cam = new Camera(1440, 960);
+		//cam = new Camera(1440, 960);
 		
 		world.populateRoads(WIDTH, HEIGHT);
 		this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -64,7 +64,7 @@ public class Draw extends JPanel {
 			}
 		}
 		
-		for (int i = 0; i < 3; i++) 
+		for (int i = 0; i < 2; i++) 
 		{
 			trafficLight[i] = ssLight.grabImage(i + 1, 1, 32, 32);
 		}
@@ -102,10 +102,10 @@ public class Draw extends JPanel {
 		for (RoadNode node : world.intersections) {
 			g2d.setColor(Color.RED);
 			g2d.drawImage(street1[3][3], node.x * 16, node.y * 16, null);
-			g2d.drawImage(trafficLight[0], node.x * 16 , node.y * 16 , null);
-			g2d.fillOval(node.x * 16 + 10, node.y * 16 + 10, 8, 8);
-			if (node.x * 8 > 640)
-				System.out.println(node.x * 8);
+			//g2d.drawImage(trafficLight[0], node.x * 16 , node.y * 16 , null);
+			//g2d.fillOval(node.x * 16 + 10, node.y * 16 + 10, 8, 8);
+			//if (node.x * 8 > 640)
+				//System.out.println(node.x * 8);
 		}
 		for (Car car : world.cars) {
 			g2d.setColor(Color.BLUE);
@@ -123,10 +123,16 @@ public class Draw extends JPanel {
 			if (next.y - start.y < 0)
 				g2d.drawImage(carPic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
 		}
-		for (TrafficLight light : world.trafficLights) 
+		for (RoadNode node : world.intersections) 
 		{
-			g2d.drawImage(trafficLight[0], light.node.x * 16 + 12, light.node.y * 16 + 12, null);
+			if (node.light != null) 
+			{
+				if(node.light.vertical)
+					g2d.drawImage(trafficLight[1], node.x * 16, node.y * 16, null);
+				if (!node.light.vertical)
+					g2d.drawImage(trafficLight[0], node.x * 16, node.y * 16, null);
+			}
+			//g2d.drawImage(trafficLight[0], node.light.x * 16, node.light.y * 16, null);
 		}
-		g.translate(-cam.getX(), -cam.getY());
 	}
 }

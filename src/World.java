@@ -34,7 +34,7 @@ public class World
 		cars.add(new Car(spawn.entrypoint, intersections.get(rand.nextInt(intersections.size()))));
 	for(RoadNode node : intersections)
 	    if(node.light != null)
-		node.light.update();
+	    	node.light.update();
 	for(int i = 0; i < cars.size(); i++)
 	{
 	    if(cars.get(i).update())

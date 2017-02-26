@@ -3,7 +3,7 @@ import java.util.List;
 
 public class RoadNode
 {
-    public class Connection
+	public class Connection
     {
     RoadNode endpoint;
 	int length;
@@ -42,8 +42,8 @@ public class RoadNode
 	    for (int i = 0; i < 4; i++)
 		if (connections[i] != null)
 		    numConnect++;
-	    if (numConnect > 2)
-		light = new TrafficLight(this);
+	    if (numConnect > 2) 
+	    	light = new TrafficLight(this);
 	}
     }
 
