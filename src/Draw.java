@@ -128,7 +128,37 @@ public class Draw extends JPanel {
 		}
 		for (RoadNode node : world.intersections) {
 			g2d.setColor(Color.RED);
-			g2d.drawImage(street1[3][3], node.x * 16, node.y * 16, null);
+			
+			if (node.connections[0] == null && node.connections[1] == null && node.connections[2] == null && node.connections[3] == null)
+				g2d.drawImage(street1[0][0], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] == null && node.connections[1] == null && node.connections[2] == null && node.connections[3] != null)
+				g2d.drawImage(street1[1][0], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] == null && node.connections[1] != null && node.connections[2] == null && node.connections[3] == null)
+				g2d.drawImage(street1[2][0], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] != null && node.connections[1] == null && node.connections[2] == null && node.connections[3] == null)
+				g2d.drawImage(street1[0][1], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] != null && node.connections[1] == null && node.connections[2] == null && node.connections[3] != null)
+				g2d.drawImage(street1[1][1], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] != null && node.connections[1] != null && node.connections[2] == null && node.connections[3] == null)
+				g2d.drawImage(street1[2][1], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] != null && node.connections[1] != null && node.connections[2] == null && node.connections[3] != null)
+				g2d.drawImage(street1[3][1], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] == null && node.connections[1] == null && node.connections[2] != null && node.connections[3] == null)
+				g2d.drawImage(street1[0][2], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] == null && node.connections[1] == null && node.connections[2] != null && node.connections[3] != null)
+				g2d.drawImage(street1[1][2], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] == null && node.connections[1] != null && node.connections[2] != null && node.connections[3] == null)
+				g2d.drawImage(street1[2][2], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] == null && node.connections[1] != null && node.connections[2] != null && node.connections[3] != null)
+				g2d.drawImage(street1[3][2], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] != null && node.connections[1] == null && node.connections[2] != null && node.connections[3] != null)
+				g2d.drawImage(street1[1][3], node.x * 16, node.y * 16, null);
+			else if (node.connections[0] != null && node.connections[1] != null && node.connections[2] != null && node.connections[3] == null)
+				g2d.drawImage(street1[2][3], node.x * 16, node.y * 16, null);
+			else //(node.connections[0] != null && node.connections[1] != null && node.connections[2] != null && node.connections[3] != null)
+				g2d.drawImage(street1[3][3], node.x * 16, node.y * 16, null);
+			
+			//g2d.drawImage(street1[3][3], node.x * 16, node.y * 16, null);
 			//g2d.drawImage(trafficLight[0], node.x * 16 , node.y * 16 , null);
 			//g2d.fillOval(node.x * 16 + 10, node.y * 16 + 10, 8, 8);
 			//if (node.x * 8 > 640)
