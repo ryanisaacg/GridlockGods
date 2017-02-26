@@ -4,30 +4,40 @@ import java.util.Random;
 
 public class World
 {
-    List<RoadNode> intersections;
+    List<TrafficLight> trafficLights;
+	List<RoadNode> intersections;
     List<Spawner> spawners;
     List<Car> cars;
     Random rand;
 
     public World()
     {
-	intersections = new ArrayList<>();
-	spawners = new ArrayList<>();
-	cars = new ArrayList<>();
-	rand = new Random();
+		trafficLights = new ArrayList<>();
+    	intersections = new ArrayList<>();
+		spawners = new ArrayList<>();
+		cars = new ArrayList<>();
+		rand = new Random();
+    }
+    
+    public boolean carFree(int x, int y)
+    {
+	for(Car car : cars)
+	    if(car.getTileX() == x && car.getTileY() == y)
+		return false;
+	return true;
     }
     
     public void update()
     {
 	for(Spawner spawn : spawners)
-	    if(rand.nextFloat() <= spawn.spawnWeight)
+	    if(rand.nextFloat() <= spawn.spawnWeight && carFree(spawn.entrypoint.x, spawn.entrypoint.y))
 		cars.add(new Car(spawn.entrypoint, intersections.get(rand.nextInt(intersections.size()))));
 	for(int i = 0; i < cars.size(); i++)
 	{
 	    if(cars.get(i).update())
 	    {
-		cars.remove(i);
-		i--;
+	    	cars.remove(i);
+	    	i--;
 	    }
 	}
     }

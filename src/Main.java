@@ -10,15 +10,17 @@ public class Main
 	
 		int width = 1440;
 		int height = 960;
-	
+		
 		frame.setPreferredSize(new Dimension(width, height));
 		frame.setMaximumSize(new Dimension(width, height));
 		frame.setMinimumSize(new Dimension(width, height));
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(new Debug());
+
+		frame.setContentPane(new Draw());
 		frame.setResizable(false);
 		frame.pack();
 		frame.setVisible(true);
+
     }
 }

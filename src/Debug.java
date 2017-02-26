@@ -63,12 +63,7 @@ public class Debug extends JPanel
 	    g2d.setColor(Color.BLUE);
 	    if(car.path.size() <= 1)
 		continue;
-	    RoadNode.Connection target = car.target();
-	    RoadNode start = car.path.get(0);
-	    RoadNode next = car.path.get(1);
-	    int x = ((int) ((next.x - start.x) * (car.progress / target.length) + start.x) * 8);
-	    int y = ((int) ((next.y - start.y) * (car.progress / target.length) + start.x) * 8);
-	    g2d.fillRect(x, y, 8, 8);
+	    g2d.fillRect(car.getTileX() * 8, car.getTileY() * 8, 8, 8);
 	}
     }
 }

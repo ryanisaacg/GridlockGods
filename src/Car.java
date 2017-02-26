@@ -7,7 +7,7 @@ public class Car
 {
     public static int CAR_LENGTH = 1;
     public List<RoadNode> path;
-    public float progress, waiting_time;
+    public float progress, waitingTime;
 
     public Car(RoadNode start, RoadNode endGoal)
     {
@@ -16,6 +16,20 @@ public class Car
 	this.progress = 0;
     }
     
+    public int getTileX()
+    {
+	RoadNode start = path.get(0);
+	RoadNode next = path.get(1);
+	return (int) ((next.x - start.x) * (progress / target().length) + start.x);
+    }
+    
+    public int getTileY()
+    {
+	RoadNode start = path.get(0);
+	RoadNode next = path.get(1);
+	return (int)((next.y - start.y) * (progress / target().length) + start.y);
+    }
+
     public RoadNode.Connection target()
     {
 	RoadNode.Connection connect = null;
@@ -33,15 +47,23 @@ public class Car
 	    return true;
 	}
 	RoadNode.Connection connect = target();
-	progress += connect.speed;
 	if (progress >= connect.length)
 	{
-	    connect.traveling.remove(this);
-	    path.remove(0);
-	    progress = 0;
-	} 
-	else
+	    boolean horizontal = path.get(0).x == path.get(1).x;
+	    if (connect.endpoint.light == null 
+		    || horizontal != connect.endpoint.light.vertical)
+	    {
+		connect.traveling.remove(this);
+		path.remove(0);
+		progress = 0;
+		waitingTime = 0;
+	    } else
+	    {
+		waitingTime++;
+	    }
+	} else
 	{
+	    progress += connect.speed;
 	    if (!connect.traveling.contains(this))
 		connect.traveling.contains(this);
 	}
@@ -60,7 +82,7 @@ public class Car
 	open.put(start, 0);
 	while (!open.containsKey(endGoal))
 	{
-	    if(open.keySet().size() == 0)
+	    if (open.keySet().size() == 0)
 	    {
 		path = new ArrayList<>();
 		path.add(start);
