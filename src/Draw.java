@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -13,6 +15,7 @@ public class Draw extends JPanel {
 	Camera cam;
 
 	private final int WIDTH = 640, HEIGHT = 480;
+	private Camera camera;
 	private BufferedImage carFile, streetTilesFile, trafficLightFile, buildingFile;
 
 	private BufferedImage building;
@@ -22,6 +25,7 @@ public class Draw extends JPanel {
 
 	public Draw() {
 		world = new World();
+		camera = new Camera(0, 0);
 		//cam = new Camera(1440, 960);
 		
 		world.populateRoads(WIDTH, HEIGHT);
@@ -68,12 +72,35 @@ public class Draw extends JPanel {
 		{
 			trafficLight[i] = ssLight.grabImage(i + 1, 1, 32, 32);
 		}
+		
+		this.setFocusable(true);
+		this.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent e)
+			{
+				switch(e.getKeyCode()){
+				case KeyEvent.VK_D:
+					camera.x += 4;
+					break;
+				case KeyEvent.VK_W:
+					camera.y -= 4;
+					break;
+				case KeyEvent.VK_A:
+					camera.x -= 4;
+					break;
+				case KeyEvent.VK_S:
+					camera.y += 4;
+					break;
+				}
+			}
+		});
+		this.requestFocus();
 	}
 
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.translate(-camera.x, -camera.y);
 
 		for (int x = 0; x < WIDTH * 3; x += 32) {
 			for (int y = 0; y < HEIGHT * 2; y += 32) {
