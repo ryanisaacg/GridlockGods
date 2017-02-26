@@ -17,11 +17,13 @@ public class Draw extends JPanel
 
 	private final int WIDTH = 1440, HEIGHT = 960;
 	private Camera camera, cameraVelocity, cameraTarget;
-	private BufferedImage carFile, streetTilesFile, trafficLightFile, buildingFile;
+	private BufferedImage carFile, streetTilesFile, trafficLightFile, buildingFile, bCarFile, rCarFile;
 
 	private BufferedImage building;
 	private BufferedImage[][] street1 = new BufferedImage[4][4];
 	private BufferedImage[][] carPic = new BufferedImage[2][2];
+	private BufferedImage[][] bCarFilePic = new BufferedImage[2][2];
+	private BufferedImage[][] rCarFilePic = new BufferedImage[2][2];
 	private BufferedImage[] trafficLight = new BufferedImage[3];
 
 	public Draw()
@@ -56,11 +58,15 @@ public class Draw extends JPanel
 		streetTilesFile = loader.loadImage("/StreetTiles.png");
 		trafficLightFile = loader.loadImage("/TrafficLight.png");
 		buildingFile = loader.loadImage("/Building.png");
+		bCarFile = loader.loadImage("/BlueCar.png");
+		rCarFile = loader.loadImage("/RedCar.png");
 
 		SpriteSheet ss = new SpriteSheet(streetTilesFile);
 		SpriteSheet ssBuilding = new SpriteSheet(buildingFile);
 		SpriteSheet ssCar = new SpriteSheet(carFile);
 		SpriteSheet ssLight = new SpriteSheet(trafficLightFile);
+		SpriteSheet ssBlueCar = new SpriteSheet(bCarFile);
+		SpriteSheet ssRedCar = new SpriteSheet(rCarFile);
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -76,6 +82,20 @@ public class Draw extends JPanel
 			for (int j = 0; j < 2; j++)
 			{
 				carPic[i][j] = ssCar.grabImage(i + 1, j + 1, 32, 32);
+			}
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				bCarFilePic[i][j] = ssBlueCar.grabImage(i + 1, j + 1, 32, 32);
+			}
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				rCarFilePic[i][j] = ssRedCar.grabImage(i + 1, j + 1, 32, 32);
 			}
 		}
 
@@ -120,6 +140,9 @@ public class Draw extends JPanel
 					break;
 				case KeyEvent.VK_S:
 					cameraVelocity.y = 0;
+					break;
+				case KeyEvent.VK_ESCAPE:
+					System.exit(0);
 					break;
 				}
 			}
