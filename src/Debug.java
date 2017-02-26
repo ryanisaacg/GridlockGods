@@ -26,7 +26,7 @@ public class Debug extends JPanel
 		repaint();
 		try
 		{
-		    Thread.sleep(16);
+		    Thread.sleep(8);
 		} catch (InterruptedException e)
 		{
 		    e.printStackTrace();
