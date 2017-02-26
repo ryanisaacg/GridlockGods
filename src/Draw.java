@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -14,6 +16,7 @@ public class Draw extends JPanel
     Camera cam;
 
     private final int WIDTH = 640, HEIGHT = 480;
+    private Camera camera;
     private BufferedImage carFile, streetTilesFile, trafficLightFile, buildingFile;
 
     private BufferedImage building;
@@ -24,9 +27,10 @@ public class Draw extends JPanel
     public Draw()
     {
 	world = new World();
+	camera = new Camera(0, 0);
 	// cam = new Camera(1440, 960);
 
-	world.populateRoads(WIDTH, HEIGHT);
+	world.populateRoads(WIDTH / 10, HEIGHT / 10);
 	this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
 	new Thread(() -> {
@@ -46,7 +50,7 @@ public class Draw extends JPanel
 
 	BufferedImageLoader loader = new BufferedImageLoader();
 
-	carFile = loader.loadImage("/car.png");
+	carFile = loader.loadImage("/Car1.png");
 	streetTilesFile = loader.loadImage("/StreetTiles.png");
 	trafficLightFile = loader.loadImage("/TrafficLight.png");
 	buildingFile = loader.loadImage("/Building.png");
@@ -77,13 +81,38 @@ public class Draw extends JPanel
 	{
 	    trafficLight[i] = ssLight.grabImage(i + 1, 1, 32, 32);
 	}
+
+	this.setFocusable(true);
+	this.addKeyListener(new KeyAdapter()
+	{
+	    public void keyPressed(KeyEvent e)
+	    {
+		switch (e.getKeyCode())
+		{
+		case KeyEvent.VK_D:
+		    camera.x += 4;
+		    break;
+		case KeyEvent.VK_W:
+		    camera.y -= 4;
+		    break;
+		case KeyEvent.VK_A:
+		    camera.x -= 4;
+		    break;
+		case KeyEvent.VK_S:
+		    camera.y += 4;
+		    break;
+		}
+	    }
+	});
+	this.requestFocus();
     }
 
     @Override
-    public void paint(Graphics g)
+    public void paintComponent(Graphics g)
     {
-	super.paint(g);
+	super.paintComponent(g);
 	Graphics2D g2d = (Graphics2D) g;
+	g2d.translate(-camera.x, -camera.y);
 
 	for (int x = 0; x < WIDTH * 3; x += 32)
 	{
@@ -133,12 +162,14 @@ public class Draw extends JPanel
 
 	    if (next.x - start.x > 0)
 		g2d.drawImage(carPic[0][0], car.getTileX() * 16, car.getTileY() * 16, null);
-	    if (next.x - start.x < 0)
+	    else if (next.x - start.x < 0)
 		g2d.drawImage(carPic[1][1], car.getTileX() * 16, car.getTileY() * 16, null);
-	    if (next.y - start.y > 0)
+	    else if (next.y - start.y > 0)
 		g2d.drawImage(carPic[0][1], car.getTileX() * 16, car.getTileY() * 16, null);
-	    if (next.y - start.y < 0)
+	    else if (next.y - start.y < 0)
 		g2d.drawImage(carPic[1][0], car.getTileX() * 16, car.getTileY() * 16, null);
+
+	    System.out.println(car.getTileX() * 16 + "," + car.getTileY() * 16);
 	}
 	for (RoadNode node : world.intersections)
 	{
